@@ -25,3 +25,13 @@ Essa camada tem como objetivo preservar a fidelidade dos dados de origem e permi
 ### Silver – Dados Tratados
 
 ### Gold – Consumo Analítico
+
+## Organização da Solução
+
+A separação das camadas é refletida tanto:
+
+- Na organização dos notebooks no Databricks (Bronze, Silver e Gold)
+
+- Quanto nas tabelas Delta criadas para cada camada
+
+Essa abordagem facilita a manutenção, a evolução do pipeline e a compreensão da arquitetura por diferentes perfis técnicos.
