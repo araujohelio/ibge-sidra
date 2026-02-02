@@ -34,4 +34,8 @@ A separação das camadas é refletida tanto:
 
 - Quanto nas tabelas Delta criadas para cada camada
 
-Essa abordagem facilita a manutenção, a evolução do pipeline e a compreensão da arquitetura por diferentes perfis técnicos.
+Facilitando a manutenção, evolução do pipeline e a compreensão da arquitetura por diferentes perfis técnicos.
+
+## Observação sobre o ambiente
+
+Devido às restrições do *Databricks Free Edition*, o armazenamento e o controle de versões dos dados são realizados exclusivamente por meio de tabelas *Delta gerenciadas*, sem dependência de acesso direto ao filesystem (DBFS). Essa decisão garante compatibilidade com o ambiente e mantém as boas práticas de engenharia de dados.
