@@ -12,13 +12,18 @@ Nas camadas subsequentes (Silver e Gold), os dados são tratados, padronizados e
 A camada Bronze é responsável pela ingestão dos dados brutos diretamente da API SIDRA do IBGE (tabela 6579).
 Nesta etapa:
 
-- Os dados são coletados no formato original, sem transformações estruturais
+- Os dados são coletados no formato original, sem transformações estruturais nos dados de negócio
 
-- É aplicado um mecanismo de retry para lidar com falhas temporárias da API
+- É aplicado um mecanismo de `retry` para lidar com falhas temporárias da API
 
 - Em caso de indisponibilidade da fonte, é utilizado como failover o último snapshot persistido na própria camada Bronze
+- Durante a ingestão, são adicionados metadados técnicos de controle, incluindo:
+  -     ingestion_timestamp: data e hora da ingestão dos dados
+  -     ingestion_source: identificação da origem da carga (API ou fallback)
 
-- Os dados são armazenados em tabelas Delta gerenciadas, garantindo persistência e possibilidade de reprocessamento
+  
+
+- Os dados são armazenados em tabelas Delta gerenciadas, garantindo persistência e possibilidade de reprocessamento.Nenhuma regra de negócio ou agregação é aplicada na camada Bronze.
 
 Essa camada tem como objetivo preservar a fidelidade dos dados de origem e permitir auditoria e reaproveitamento futuro.
 
@@ -70,6 +75,18 @@ Os dados tratados são armazenados como tabelas Delta gerenciadas, garantindo:
 - Compatibilidade com o Databricks Free Edition
 
 - Facilidade de reprocessamento e evolução do pipeline
+
+#### Objetivo da Camada Silver
+
+O resultado da camada Silver é um conjunto de dados:
+
+- Estruturado
+
+- Tipado corretamente
+
+- Consistente
+
+- Pronto para uso em agregações e análises na camada Gold
 
 ### Gold – Consumo Analítico
 
