@@ -17,6 +17,7 @@ Nesta etapa:
 - É aplicado um mecanismo de `retry` para lidar com falhas temporárias da API
 
 - Em caso de indisponibilidade da fonte, é utilizado como failover o último snapshot persistido na própria camada Bronze
+- Remoção do registro de cabeçalho( primeira linha) retornado pela API, que contém apenas descrições das dimensões e não representa uma observação válida
 - Durante a ingestão, são adicionados metadados técnicos de controle, incluindo:
   -     ingestion_timestamp: data e hora da ingestão dos dados
   -     ingestion_source: identificação da origem da carga (API ou fallback)
