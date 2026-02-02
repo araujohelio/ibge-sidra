@@ -22,7 +22,54 @@ Nesta etapa:
 
 Essa camada tem como objetivo preservar a fidelidade dos dados de origem e permitir auditoria e reaproveitamento futuro.
 
-### Silver – Dados Tratados
+### Silver – Tratamento e Padronização dos Dados
+
+A camada Silver é responsável por transformar os dados brutos ingeridos da API SIDRA (IBGE) em um conjunto de dados estruturado, confiável e pronto para análises exploratórias e agregações.
+
+Nesta etapa, os dados provenientes da camada Bronze passam por processos de limpeza, padronização e enriquecimento semântico, mantendo rastreabilidade por meio de metadados de ingestão.
+
+#### Tratamentos Aplicados
+1- ***Seleção de colunas relevantes***
+  
+  Foram selecionados apenas os campos necessários para consumo analítico, descartando metadados técnicos não utilizados.
+
+2- ***Renomeação semântica de campos***
+
+  Os nomes originais retornados pela API (ex.: D3N, D2N, V) foram renomeados para nomes mais descritivos, como:
+
+    > localidade
+
+    > periodo
+    
+    > valor
+
+    > unidade_medida
+    
+3- ***Manutenção de metadados de ingestão***
+  
+   Os campos **ingestion_source** e **ingestion_timestamp** foram preservados, permitindo rastreabilidade e auditoria do processo de ingestão.
+   
+4- ***Conversão de tipos de dados***
+  
+  O campo de valor numérico, originalmente representado como texto, foi convertido para o tipo DOUBLE, permitindo cálculos e agregações.
+
+5- ***Tratamento de registros malformados***
+  
+  Durante a conversão de tipos, foi utilizado `try_cast` para tolerar registros inválidos ou malformados (ex.: textos ou símbolos), convertendo-os para NULL sem interromper o pipeline.
+
+6- ***Validação básica de qualidade***
+  
+  Registros com valores numéricos inválidos foram identificados e filtrados, garantindo consistência dos dados disponíveis para análise.
+
+#### Persistência dos Dados
+
+Os dados tratados são armazenados como tabelas Delta gerenciadas, garantindo:
+
+- Persistência confiável
+
+- Compatibilidade com o Databricks Free Edition
+
+- Facilidade de reprocessamento e evolução do pipeline
 
 ### Gold – Consumo Analítico
 
